@@ -1,0 +1,233 @@
+#tao bang food_type CREATE TABLE food_type 
+	type_id INT PRIMARY KEY AUTO_INCREMENT,
+	type_name VARCHAR(255) NOT NULL
+# tao bang food
+CREATE TABLE food (
+	food_id INT PRIMARY KEY AUTO_INCREMENT,
+	food_name VARCHAR(255) NOT NULL,
+	image VARCHAR(255),
+	price FLOAT NOT NULL,
+	description VARCHAR(255),
+	type_id INT,
+	FOREIGN KEY (type_id) REFERENCES food_type (type_id))
+	
+	INSERT INTO food (food_name, image, price, description, type_id) VALUES
+  ('Banh mi', 'banh-mi.jpg', 2, 'Vietnamese baguette sandwich', 1),
+  ('Goi cuon', 'goi-cuon.jpg', 3, 'Vietnamese spring rolls', 1),
+  ('Com tam', 'com-tam.jpg', 4, 'Vietnamese broken rice', 1),
+  ('Cao lau', 'cao-lau.jpg', 5, 'Vietnamese noodle soup with turmeric', 1),
+  ('Hu tieu', 'hu-tieu.jpg', 6, 'Vietnamese noodle soup with pork', 1),
+  ('Bun bo hue', 'bun-bo-hue.jpg', 7, 'Vietnamese noodle soup with beef and lemongrass', 1),
+  ('Bun cha Hanoi', 'bun-cha-hanoi.jpg', 8, 'Vietnamese grilled pork and rice noodles', 1),
+  ('Bun thit nuong', 'bun-thit-nuong.jpg', 9, 'Vietnamese grilled pork and rice noodles', 1),
+  ('Banh canh cua', 'banh-canh-cua.jpg', 10, 'Vietnamese crab noodle soup', 1);
+
+USE node37
+
+# kết bảng - JOIN
+# CROSS JOIN
+
+SELECT *
+FROM food, food_type
+WHERE food.type_id = food_type.type_id AND price >BASE64
+
+# INNER JOIN ,	LEFT JOIN , RIGHT JOIN
+SELECT *
+FROM food INNER JOIN food_type ON food.type_id = food_type.type_id
+WHERE price > 4 
+
+#Tạo bảng users
+
+CREATE TABLE users (
+	user_id INT PRIMARY KEY AUTO_INCREMENT,
+	full_name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	password_user VARCHAR(255) NOT NULL
+)
+
+INSERT INTO users (full_name, email, password_user) VALUES
+  ('John Doe', 'johndoe@gmail.com', 'password1'),
+  ('Jane Doe', 'janedoe@gmail.com', 'password2'),
+  ('Peter Jones', 'peterjones@gmail.com', 'password3'),
+  ('Mary Jones', 'maryjones@gmail.com', 'password4'),
+  ('Robert Smith', 'robertsmith@gmail.com', 'password5'),
+  ('Susan Smith', 'susansmith@gmail.com', 'password6'),
+  ('Michael Taylor', 'michaeltaylor@gmail.com', 'password7'),
+  ('Sarah Taylor', 'sarahtaylor@gmail.com', 'password8'),
+  ('William Brown', 'williambrown@gmail.com', 'password9'),
+  ('Jennifer Brown', 'jenniferbrown@gmail.com', 'password10');
+
+
+#Tạo bảng restaurant
+CREATE TABLE restaurant (
+	res_id INT PRIMARY KEY AUTO_INCREMENT,
+	res_name VARCHAR(255) NOT NULL,
+	image VARCHAR(255),
+	description VARCHAR(255)
+)
+INSERT INTO restaurant (res_name, image, description) VALUES
+('Il Migliore', 'il-migliore.jpg', 'Italian Restaurant'),
+('Peking Garden', 'peking-garden.jpg', 'Chinese Restaurant'),
+('Sushi Central', 'sushi-central.jpg', 'Japanese Restaurant'),
+('Taco Fiesta', 'taco-fiesta.jpg', 'Mexican Restaurant'),
+('Curry Up', 'curry-up.jpg', 'Indian Restaurant'),
+('Thai Delight', 'thai-delight.jpg', 'Thai Restaurant'),
+('Pho Real', 'pho-real.jpg', 'Vietnamese Restaurant'),
+('Aloha Eats', 'aloha-eats.jpg', 'Hawaiian Restaurant'),
+('Crepe Corner', 'crepe-corner.jpg', 'French Restaurant'),
+('Pasta Perfect', 'pasta-perfect.jpg', 'Italian Restaurant');
+
+#Tạo bảng like_res
+CREATE TABLE like_res (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users (user_id),
+	res_id INT,
+	FOREIGN KEY (res_id) REFERENCES restaurant (res_id),
+	date_like DATETIME
+)
+INSERT INTO like_res (user_id, res_id, date_like) VALUES
+(1, 1, '2023-07-22'),
+(1, 2, '2023-07-22'),
+(1, 3, '2023-07-22'),
+(1, 6, '2023-07-22'),
+(1, 7, '2023-07-22'),
+(2, 8, '2023-07-22'),
+(2, 1, '2023-07-22'),
+(2, 2, '2023-07-22'),
+(2, 3, '2023-07-22'),
+(2, 6, '2023-07-22'),
+(3, 7, '2023-07-22'),
+(3, 8, '2023-07-22'),
+(4, 8, '2023-07-22'),
+(5, 8, '2023-07-22'),
+(7, 8, '2023-07-22'),
+(8, 8, '2023-07-22');
+
+#Tạo bảng rate_res
+CREATE TABLE rate_res (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users (user_id),
+	res_id INT,
+	FOREIGN KEY (res_id) REFERENCES restaurant (res_id),
+	amount INT,
+	date_rate DATETIME
+)
+INSERT INTO rate_res (user_id, res_id, amount, date_rate)
+VALUES
+  (1, 2, 5, '2023-07-20'),
+  (1, 3, 4, '2023-07-20'),
+  (1, 4, 3, '2023-07-20'),
+  (1, 5, 2, '2023-07-20'),
+  (1, 6, 1, '2023-07-20'),
+  (2, 2, 4, '2023-07-20'),
+  (2, 3, 3, '2023-07-20'),
+  (2, 4, 2, '2023-07-20'),
+  (2, 5, 1, '2023-07-20'),
+  (2, 6, 5, '2023-07-20'),
+  (3, 2, 3, '2023-07-20'),
+  (3, 3, 2, '2023-07-20'),
+  (3, 4, 1, '2023-07-20'),
+  (3, 5, 5, '2023-07-20'),
+  (3, 6, 4, '2023-07-20'),
+  (4, 2, 2, '2023-07-20'),
+  (4, 3, 1, '2023-07-20'),
+  (4, 4, 5, '2023-07-20'),
+  (4, 5, 4, '2023-07-20'),
+  (4, 6, 3, '2023-07-20');
+
+#Tạo bảng order
+CREATE TABLE order_food (
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users (user_id),
+	food_id INT,
+	FOREIGN KEY (food_id) REFERENCES food (food_id),
+	amount INT,
+	code_order VARCHAR(255),
+	arr_sub_id VARCHAR(255)
+)
+
+INSERT INTO order_food (user_id, food_id, amount, code_order, arr_sub_id)
+VALUES
+  (2, 2, 2, 2, 2),
+  (3, 3, 3, 3, 3),
+  (4, 4, 4, 4, 4),
+  (5, 5, 5, 5, 5),
+  (6, 6, 6, 6, 6),
+  (7, 7, 7, 7, 7),
+  (8, 8, 8, 8, 8),
+  (9, 9, 9, 9, 9);
+  
+#Tạo bảng sub_food
+CREATE TABLE sub_food (
+	sub_id INT PRIMARY KEY AUTO_INCREMENT,
+	sub_name VARCHAR(255),
+	sub_price FLOAT,
+	food_id INT,
+	FOREIGN KEY (food_id) REFERENCES food (food_id)
+)
+INSERT INTO sub_food (sub_name, sub_price, food_id)
+VALUES
+  ('Extra Cheese', 1.25, 1),
+  ('Extra Sauce', 0.75, 1),
+  ('Extra Meat', 1.50, 1),
+  ('Extra Vegetables', 0.50, 1),
+  ('Side Salad', 3.50, 2),
+  ('French Fries', 2.50, 2),
+  ('Onion Rings', 3.00, 2),
+  ('Mozzarella Sticks', 4.00, 2),
+  ('Chocolate Chip Cookie', 2.00, 3),
+  ('Ice Cream Sundae', 4.00, 3);
+
+##---------##
+## Tìm 5 người đã like nhà hàng nhiều nhất
+
+SELECT like_res.user_id,users.full_name, COUNT(*) AS total_likes
+FROM like_res LEFT JOIN users ON  like_res.user_id = users.user_id
+GROUP BY like_res.user_id LIMIT 5;
+
+## Tìm 2 nhà hàng có lượt like nhiều nhất
+SELECT like_res.res_id,restaurant.res_name, COUNT(*) AS like_count
+FROM like_res LEFT JOIN restaurant ON like_res.res_id = restaurant.res_id
+GROUP BY like_res.res_id
+ORDER BY like_count DESC
+LIMIT 2;
+
+## Tìm người đặt hàng nhiều nhất
+SELECT
+    user_id,
+    COUNT(*) AS order_count
+FROM
+    order_food
+GROUP BY
+    user_id
+ORDER BY
+    order_count DESC
+LIMIT 1;
+
+## Tìm người không hoạt động, ko đặt, like, đánh giá
+SELECT
+    users.user_id,
+    users.full_name
+FROM
+    users
+LEFT JOIN
+    order_food
+ON
+    users.user_id = order_food.user_id
+LEFT JOIN
+    like_res
+ON
+    users.user_id = like_res.user_id
+LEFT JOIN
+    rate_res
+ON
+    users.user_id = rate_res.user_id
+WHERE
+    order_food.food_id IS NULL
+AND
+    like_res.like_id IS NULL
+AND
+    rate_res.user_id IS NULL;
+
+
+
